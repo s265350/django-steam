@@ -1,0 +1,46 @@
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Basics
+*.py[cod]
+*.pyc
+__pycache__
+.cache/
+**/certs
+*.sqlite3
+
+# Logs
+logs
+*.log
+pip-log.txt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Webpack
+webpack-stats.json
+dist/
+
+# npm
+node_modules
+
+# Compass
+.sass-cache
+
+# User-uploaded media
+media/
+
+# Collected staticfiles
+*/staticfiles/
+
+# Editor directories and files
+.idea
+.vscode
+.pythonconfig
+
+# Venv
+env
+*.env
+*.py
