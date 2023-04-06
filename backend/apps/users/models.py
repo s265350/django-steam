@@ -69,13 +69,69 @@ class SteamUserManager(BaseUserManager):
         return results.filter(role=User.Role.STEAMUSER)
 
 class SteamUser(User):
-    pass
+    # change default role
+    base_role = User.Role.STEAMUSER
+
+    # attach the manager
+    objects = SteamUserManager()
+
+    # the table is not created but the class can be used to handle data
+    class Meta:
+        proxy = True
+
+@receiver(post_save, sender=SteamUser)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and instance.role == 'STEAMUSER':
+        SteamUserProfile.objects.create(user=instance)
 
 class SteamUserProfile(models.Model):
-    pass
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE) # CASCADE will delete everything related to the user if deleted
+    
+    # Steam API informations
+    personaname = models.CharField(_('Name'), max_length=50, null=True, blank=True)
+    profileurl = models.CharField(_('URL'), max_length=255, null=True, blank=True)
+    
+    avatar = models.CharField(_('Avatar'), max_length=255, null=True, blank=True)
+    avatarmedium = models.CharField(_('Avatar medium'), max_length=255, null=True, blank=True)
+    avatarfull = models.CharField(_('Avatar full'), max_length=255, null=True, blank=True)
+    
+    communityvisibilitystate = models.IntegerField(_('Visibility'), choices=[(i, i) for i in range(1, 6)], default=1) # 1 - Private, 2 - Friends only, 3 - Friends of Friends, 4 - Users Only, 5 - Public
+    personastate = models.IntegerField(_('Persona State'), choices=[(i, i) for i in range(7)], default=1) # 0 - Offline, 1 - Online, 2 - Busy, 3 - Away, 4 - Snooze, 5 - Looking to trade, 6 - Looking to play
+    # others
+
+    # functions
+    def __str__(self): # record shown in SteamUserProfiles table in the /admin route
+        return str(self.user.username) + ' - ' + str(self.personaname)
+
+    def get_full_name(self):
+        return str(self.personaname)
+
+class CoachManager(BaseUserManager):
+    # handles operations on Coach only
+
+    # returns all steam users
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.COACH)
 
 class Coach(User):
-    pass
+    # change default role
+    base_role = User.Role.COACH
+    # attach the manager
+    objects = CoachManager()
+    # the table is not created but the class can be used to handle data
+    class Meta:
+        proxy = True
+
+    # functions
+    def welcome(self):
+        return 'Only for steam coaches'
+
+@receiver(post_save, sender=Coach)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and instance.role == 'COACH':
+        CoachProfile.objects.create(user=instance)
+
 
 class CoachProfile(models.Model):
-    pass
+    user = models.OneToOneField(User, on_delete=models.CASCADE) # CASCADE will delete everything related to the user if deleted
