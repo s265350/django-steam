@@ -15,7 +15,7 @@ RUN pip install -r ./requirements.txt
 # upload scripts
 COPY ./scripts/start.sh /
 
-# upload files
+# upload all files
 COPY . /
 
 # Fix windows docker bug, convert CRLF to LF
