@@ -17,9 +17,9 @@ python manage.py migrate
 
 if [ ${env.bool('USE_SSL'):-false} ]
 then
-  python manage.py runserver
+    python manage.py runserver_plus --cert-file cert.pem --key-file key.pem ${env.bool('ABSOLUTE_URL')}
 else
-  python manage.py runserver_plus ${env.bool('ABSOLUTE_URL')}
+    python manage.py runserver
 fi
 
-#gunicorn config.wsgi -w 4 --worker-class gevent -b 0.0.0.0:8000 --chdir=/app
+#gunicorn config.wsgi -w 4 --worker-class gevent -b ${env.bool('ABSOLUTE_URL')} --chdir=/app
