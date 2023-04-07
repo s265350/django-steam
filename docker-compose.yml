@@ -1,0 +1,35 @@
+# CLI commands:
+# - docker-compose up --build
+# - docker-compose run backend python manage.py createsuperuser
+version: '3.3'
+
+volumes:
+    django_steam_vue_data: {}
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+    restart: on-failure
+    env_file:
+      - .env
+    command: bash ./scripts/start.sh
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=mysecretpass
+    ports:
+      - '4321:5432'
+    volumes: 
+      - django_steam_vue_data:/var/lib/postgresql/data
+    

@@ -14,8 +14,10 @@ python manage.py migrate
 
 if [ ${USE_SSL} = 'True' ]
 then
+    echo 'ssl'
     python manage.py runserver_plus --cert-file cert.pem --key-file key.pem ${ABSOLUTE_URL}:${APP_PORT}
 else
+    echo 'nossl'
     python manage.py runserver ${ABSOLUTE_URL}:${APP_PORT}
 fi
 
