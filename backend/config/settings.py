@@ -31,13 +31,13 @@ environ.Env.read_env(ROOT_DIR('.env'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str('SECRET_KEY')
 STEAM_API_KEY = env.str('STEAM_API_KEY')
-USE_SSL = env.bool('USE_SSL')
+USE_SSL = env.bool('USE_SSL', default=False)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
-DOMAIN = env.str('DOMAIN')
+DOMAIN = env.str('DOMAIN', default='http://localhost:8000')
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -120,22 +120,29 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+def database():
+    if (env.bool('USE_POSTGRES', default=False)):
+        return {
+            'default': {
+                # Postgres DB settings
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': env.str('POSTGRES_NAME', default='postgres'),
+                'USER': env.str('POSTGRES_USER', default='postgresuser'),
+                'PASSWORD': env.str('POSTGRES_PASSWORD', default='mysecretpass'),
+                'HOST': env.str('POSTGRES_HOST', default='localhost'),
+                'PORT': env.int('POSTGRES_PORT', default=5432),
+            },
+        }
+    else:
+        return {
+            'default': {
+                # sqlite3 DB settings
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            },
+        }
 
-DATABASES = {
-    'default': {
-        # sqlite3 DB settings
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # Postgres DB settings
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': env.str('POSTGRES_NAME'),
-        # 'USER': env.str('POSTGRES_USER'),
-        # 'PASSWORD': env.str('POSTGRES_PASSWORD'),
-        # 'HOST': env.str('POSTGRES_HOST'),
-        # 'PORT': env.int('POSTGRES_PORT'),
-    },
-}
-
+DATABASES = database()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

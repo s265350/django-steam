@@ -2,10 +2,13 @@
 
 ## 1. Environment variables
 
-You'll need to change name to the "template.env" file to ".env" and fill all the empty fields:
+You'll need to change name to the ".env.template" file to ".env" and fill all the empty fields:
 - SECRET_KEY: your Django project secret key
 - STEAM_API_KEY: your Steam secret key
-- ABSOLUTE_URL: 0.0.0.0 (with docker) or 127.0.0.1 (without docker)
+- ABSOLUTE_URL: uncomment (#) the variable you want to use and comment or delete the others
+ - 0.0.0.0 (with docker)
+ - 127.0.0.1 (without docker)
+ - your domain if you have one
 
 ## 2. SSL certificate (for HTTPS)
 
@@ -19,38 +22,16 @@ You can either use the default sqlite3 database setting or use postgres.
 
 ### Sqllite3
 
-There is no futher setup to do forthe database.
+There is no futher setup to do for this database.
 
 ### PostgreSQL
 
-Let's start a postgres server in docker (this way it's much simpler to setup).
+First of all we need to change USE_POSTGRES in the env file and set it to True.
+You can also change port, the container name, the user and the password if you wish, but remember to change them also in the following command.
 
-Just run:
+Let's start a postgres server in docker (this way it's much simpler to setup) by running:
 
 `docker run --name django-vue -p 5432:5432 -e POSTGRES_USER=postgresuser -e POSTGRES_PASSWORD=mysecretpass -d postgres`
-
-You can change port the container name, the user and the password if you wish, but remember to change them also in the env file.
-
-You need to change the database in "django-vue/backend/config/settings.py".
-
-Just switch the commented lines.
-
-```
-DATABASES = {
-    'default': {
-        # sqlite3 DB settings
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # Postgres DB settings
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': env.str('POSTGRES_DB'),
-#        'USER': env.str('POSTGRES_USER'),
-#        'PASSWORD': env.str('POSTGRES_PASSWORD'),
-#        'HOST': env.str('POSTGRES_HOST'),
-#        'PORT': env.int('POSTGRES_PORT'),
-    },
-}
-```
 
 ## 3. It's better to run in a Docker container
 
