@@ -1,6 +1,8 @@
 # Steam signin system with Django and Vue.js
 
-## 1. Environment variables
+First two steps are common to all buildings and run methods.
+
+## Environment variables
 
 You'll need to change name to the ".env.template" file to ".env" and fill all the empty fields:
 - SECRET_KEY: your Django project secret key
@@ -10,110 +12,96 @@ You'll need to change name to the ".env.template" file to ".env" and fill all th
  - 127.0.0.1 (without docker)
  - your domain if you have one
 
-## 2. SSL certificate (for HTTPS)
+Also you may want to set up some features:
 
-You are forced to use SSL certificates ONLY if Django runs in Docker.
-Feel free to use any tutorial on the internetto create your certificate, here itis the one I followed: https://timonweb.com/django/https-django-development-server-ssl-certificate/
-Put both cert and key files inside the "django-vue/backend" folder.
+- DEBUG: flag for development builds 
+- USE_SSL: flag to use SSL certificates (view next point)
+- USE_POSTGRES: flag that sets up postgres database instead of defualt sqlite
+- APP_PORT: choose the port you prefer
+- ABSOLUTE_URL: choose between DOCKER_URL, LOCAL_URL or DOMAIN_URL values based on how you run the application
+- EMAIL_PORT: setting for the email server (NOT USED FOR NOW)
+- EMAIL_HOST: setting for the email server (NOT USED FOR NOW)
+- POSTGRES_USER: the database user (USE_POSTGRES must be True)
+- POSTGRES_PASSWORD: the database password (USE_POSTGRES must be True)
+- POSTGRES_PORT: the database port (USE_POSTGRES must be True)
 
-## 3. Databse setup
+## SSL certificate (for HTTPS)
 
-You can either use the default sqlite3 database setting or use postgres.
+Feel free to use any tutorial on the internet to create your certificate, here is the one I followed:
+https://timonweb.com/django/https-django-development-server-ssl-certificate/
+Put both cert and key files inside the "django-steam-vue/backend" folder.
 
-### Sqllite3
+## Build and run with Docker Compose
 
-There is no futher setup to do for this database.
+Docker Compose takes care of setting up anything you need.
 
-### PostgreSQL
+Download the CLI tool or the Docker application from their website: https://www.docker.com and Docker Compose as well.
 
-First of all we need to change USE_POSTGRES in the env file and set it to True.
-You can also change port, the container name, the user and the password if you wish, but remember to change them also in the following command.
+Open the "django-steam-vue" folder in the terminal and run:
 
-Let's start a postgres server in docker (this way it's much simpler to setup) by running:
+`docker-compose up -d --build`
 
-`docker run --name django-vue -p 5432:5432 -e POSTGRES_USER=postgresuser -e POSTGRES_PASSWORD=mysecretpass -d postgres`
+### Enjoy
 
-## 3. It's better to run in a Docker container
+Open your favourite browser at http://localhost:8000 if you didn't change any option in the env file.
+
+Add an "s" after "http" if you set only USE_SSL.
+
+Change the domain and the port accordingly with the changes you made.
+
+# Without Docker Compose
+
+You need to set up anything by hand.
+
+Still you can choose to run the backend in Docker or locally.
+
+## With Docker
 
 Download the CLI tool or the Docker application from their website: https://www.docker.com.
 
-## 4. With Docker
+Open the terminal and navigate to the "django-steam-vue/backend" folder and run this command to build and run the server:
 
-### Build the image
+`chmod +x runwithdocker.sh && ./runwithdocker.sh`
 
-Open the terminal and navigate to the "django-vue/backend" folder and run this command:
+## Without Docker
 
-`docker build . -t django-vue`
+If you don't want to use Docker and run the server on the terminal follow this steps.
 
-Building may take sometime.
+Be sure to have python3 installed.
 
-### Run the container
+This script will upgrade pip, install a virtual environemnt library, activate it and 
 
-Run this command in the same folder to start the contianer in detach mode:
+`chmod +x runwithdocker.sh && ./runwithdocker.sh`
 
-`docker run --name django-vue --env-file .env -p 8000:8000 -d django-vue`
+Note: to stop the environment type "deactivate"
 
-It will take some time to be ready after it starts running (check the startus in the container terminal).
+### Install dependencies and migrate the server
 
-If you have the docker application youcan start and stop the container  any time without the terminal.
+The start.sh script will execute all commands to install our dependencies, migrate and the server.
 
-## 4. Without Docker
+In the terminal navigate to the "django-steam-vue/backend" folder and run this command:
 
-If you don't want to use docker but run the server on the terminal follow this steps.
-Be sure to have python 3 installed.
+`chmod +x scripts/start.sh && ./scripts/start.sh`
 
-#### Virtual environment
+### Create admin user
 
-It is safer to install the dependencies inside a virtual environment, if you don't care just run the first command.
-In the terminal navigate to the "django-vue" folder and run this commands:
-
-`pip install --upgrade pip`
-
-`pip install virtualenv`
-
-`virtualenv env`
-
-`. env/bin/activate`
-
-#### Install dependencies and migrate the server
-
-In the terminal navigate to the "django-vue/backend" folder and run this commands:
-
-`pip install -r requirements.txt`
-
-`python manage.py makemigrations`
-
-`python manage.py migrate`
-
-#### Create admin user
-
-To create a server admin run this command and you''lbe prompted for the credentials to login.
+The start.sh script will start the server, if you want to create an admin you have to stop it (CTRL-C) and run this command:
 
 `python manage.py createsuperuser`
 
+You'll be asked for the admin credentials.
+
 After you start the server, you can enter the admin section by visiting the path '/admin'.
 
-#### Run the server
+### Run the server
 
-If you use SSL the server must be started with this command:
+To start the server run this command in "django-steam-vue/backend":
 
-`python manage.py runserver_plus --cert-file cert.pem --key-file key.pem 127.0.0.1:8000`
+`chmod +x scripts/run.sh && ./scripts/run.sh`
 
-Else you can just run:
+## Enjoy
 
-`python manage.py runserver`
-
-If you changed the DOMAIN, ABSOLUTE_URL or APP_PORT in the .env file modify the last part of the first command accordingly.
-
-#### To exit the environment
-
-Stop the server first with CTRL-C then run:
-
-`deactivate`
-
-## 6. Browser
-
-Open your browser and go to:
+After anything went well, you may open your browser at:
 
 - https://0.0.0.0/8000 if you ran Django in Docker
 

@@ -19,6 +19,7 @@ COPY . $DockerHOME
 ENV PYTHONDONTWRITEBYTECODE 1
 # doesn't buffer stdin/stdout
 ENV PYTHONUNBUFFERED 1
+
 ENV PYTHONFAULTHANDLER=1
 ENV PYTHONHASHSEED=random
 ENV PIP_NO_CACHE_DIR=off
@@ -31,4 +32,4 @@ RUN pip install -r ./requirements.txt
 # port where the Django app runs
 EXPOSE ${APP_PORT}
 
-#CMD chmod +x scripts/start.sh && ./scripts/start.sh
+CMD chmod +x scripts/start.sh && ./scripts/start.sh
