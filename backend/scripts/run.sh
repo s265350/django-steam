@@ -5,13 +5,15 @@ set -o pipefail # prevents errors in a pipeline from being masked
 set -o nounset #  exit when your script tries to use undeclared variables
 set -o xtrace # trace what gets executed (useful for debugging)
 
+export $(grep -v '^#' ../../.env | xargs)
+
 if [ $1 = 'True' ]
 then
-    if [ $2 = 'True' ]
+    if [ ${USE_SSL:-False} = 'True' ]
     then
-        python backend/manage.py runserver_plus --cert-file cert.pem --key-file key.pem $3:$4
+        python backend/manage.py runserver_plus --cert-file cert.pem --key-file key.pem ${ABSOLUTE_URL:-0.0.0.0}:${APP_PORT:-8000}
     else
-        python backend/manage.py runserver $3:$4
+        python backend/manage.py runserver ${ABSOLUTE_URL:-0.0.0.0}:${APP_PORT:-8000}
     fi
 else
     if [ ${USE_SSL:-False} = 'True' ]

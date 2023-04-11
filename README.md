@@ -67,11 +67,11 @@ Run this commands in *django-steam-vue/backend*, to install a virtual environemn
 
 `pip install virtualenv`
 
-`virtualenv env`
+`virtualenv venv`
 
-`. env/bin/activate`
+`. venv/bin/activate`
 
-`pip install -r ./requirements.txt`
+`pip install -r ./backend/requirements.txt`
 
 If you want to use **postgres** set the .env file accordingly and run:
 
@@ -91,7 +91,7 @@ Collect the static files:
 
 Run the server:
 
-`bash ./backend/scripts/run.sh True ${USE_SSL} ${ABSOLUTE_URL} ${APP_PORT}`
+`bash ./backend/scripts/run.sh True`
 
 To stop the server use *CRTL-C*, to stop the environment just type *deactivate*.
 
