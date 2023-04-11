@@ -25,6 +25,7 @@ dist/
 
 # npm
 node_modules
+package-lock.json
 
 # Compass
 .sass-cache

@@ -15,17 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import LogoutView
 
+from apps.home import views as home
 from apps.users import views as users
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', include('.urls'), name='home'),
+]
+
+# web patterns
+urlpatterns += [
+    path('', home.home, name='home'),
 ]
 
 # user login patterns
 urlpatterns += [
-    path('signout/', users.signout, name='signout'),
-    path('api/v1/users/signin', users.signin, name='signin'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('api/v1/users/signup', users.signup, name='signup'),
     path('api/v1/users/callback', users.callback, name='callback'),
 ]

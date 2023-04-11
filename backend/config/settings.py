@@ -44,6 +44,10 @@ DOMAIN = env.str('DOMAIN', default='http://localhost:8000')
 EMAIL_PORT = env.int('EMAIL_PORT', default='1025')
 EMAIL_HOST = env.str('EMAIL_HOST', default='mailhog')
 
+LOGIN_URL = 'api/v1/users/signin'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,6 +90,7 @@ STATIC_URL = '/staticfiles/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(BASE_DIR / 'static'),
+    str(BASE_DIR / 'templates'),
 ]
 
 # MEDIA CONFIGURATION

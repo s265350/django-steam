@@ -7,7 +7,7 @@ from django.conf import settings
 USE_SSL = getattr(settings, 'USE_SSL', False)
 
 # Create your views here.
-def signin(request): # GET /login
+def signup(request): # GET /login
     return auth('/api/v1/users/callback', use_ssl=USE_SSL)
 
 def callback(request): # GET /process
@@ -18,7 +18,4 @@ def callback(request): # GET /process
         login(request, user)
 
     return redirect('/')
-
-def signout(request):
-    logout(request)
-    return redirect('/')
+    
