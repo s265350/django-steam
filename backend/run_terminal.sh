@@ -7,12 +7,12 @@ set -o xtrace # trace what gets executed (useful for debugging)
 
 export $(grep -v '^#' .env | xargs)
 
-if [ ${USE_POSTGRES} = 'True' ]
+if [ ${USE_POSTGRES:-False} = 'True' ]
 then
-    docker run --name ${POSTGRES_NAME} -p ${POSTGRES_PORT}:5432 -e POSTGRES_USER=${POSTGRES_USER} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} -d postgres
+    docker run --name ${POSTGRES_NAME:-postgres} -p ${POSTGRES_PORT:-4321}:5432 -e POSTGRES_USER=${POSTGRES_USER:-user} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-pass} -d postgres
+    until docker exec postgres pg_isready ; do sleep 3 ; done
 fi
 
-until docker exec postgres pg_isready ; do sleep 3 ; done
 
 pip install --upgrade pip
 
