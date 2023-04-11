@@ -9,4 +9,4 @@ export $(grep -v '^#' ../.env | xargs)
 
 docker build . -t django-steam-vue-backend
 
-docker run --name django-steam-vue-backend --env-file ../.env -p 8000:${APP_PORT} -d django-steam-vue-backend
+docker run --name django-steam-vue-backend --env-file ../.env -p ${APP_PORT}:8000 -d django-steam-vue-backend

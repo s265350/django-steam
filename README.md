@@ -49,9 +49,9 @@ Note: to see how it is going you can eather remove the *-d* from the command or 
 
 Download the *Docker CLI tool* or the *Docker application* (best) from the website: **https://www.docker.com**.
 
-Open the terminal in the *django-steam-vue/backend* folder and run this script to build and run the server:
+Open the terminal in the *django-steam-vue* folder and run this script to build and run the server:
 
-`bash ./runwithdocker.sh`
+`bash ./backend/run_docker.sh`
 
 Note (temporarly): you can **NOT** run postgres in Docker since it prevents containers to communicate (do **NOT** set the **USE_POSTGRES** flag in the *.env* file). If you want to use posgres you have to run the server in the terminal.
 
@@ -61,41 +61,15 @@ If you don't want to use Docker at all and run the server in the terminal follow
 
 Be sure to have python3 installed.
 
-Run this commands in *django-steam-vue/backend*, to install a virtual environemnt, activate it and install all libraries needed:
+Open the terminal in the *django-steam-vue* folder and run this script to build and run the server:
 
-`pip install --upgrade pip`
-
-`pip install virtualenv`
-
-`virtualenv venv`
-
-`. venv/bin/activate`
-
-`pip install -r ./backend/requirements.txt`
-
-If you want to use **postgres** set the .env file accordingly and run:
-
-`docker run --name ${POSTGRES_NAME} -p ${POSTGRES_PORT}:4321 -e POSTGRES_USER=${POSTGRES_USER} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} -d postgres`
-
-Apply the server migrations:
-
-`python backend/manage.py makemigrations users`
-
-`python backend/manage.py makemigrations`
-
-`python backend/manage.py migrate`
-
-Collect the static files:
-
-`python backend/manage.py collectstatic --noinput --verbosity 0`
-
-Run the server:
-
-`bash ./backend/scripts/run.sh True`
+`bash ./backend/run_terminal.sh`
 
 To stop the server use *CRTL-C*, to stop the environment just type *deactivate*.
 
-Note: make sure to substitute the appropriate values.
+To restart the server run:
+
+`. venv/bin/activate && bash ./backend/scripts/run.sh`
 
 ## Enjoy
 
