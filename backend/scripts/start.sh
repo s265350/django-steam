@@ -10,6 +10,6 @@ python manage.py makemigrations
 python manage.py migrate users
 python manage.py migrate
 
-#python manage.py collectstatic --noinput --verbosity 0
+# python manage.py collectstatic --noinput --verbosity 0
 
-chmod +x run.sh && ./run.sh
+bash ./scripts/run.sh

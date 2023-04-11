@@ -5,11 +5,21 @@ set -o pipefail # prevents errors in a pipeline from being masked
 set -o nounset #  exit when your script tries to use undeclared variables
 set -o xtrace # trace what gets executed (useful for debugging)
 
-if [ ${USE_SSL} = 'True' ]
+if [ $1 = 'True' ]
 then
-    python manage.py runserver_plus --cert-file cert.pem --key-file key.pem ${ABSOLUTE_URL}:${APP_PORT}
+    if [ $2 = 'True' ]
+    then
+        python backend/manage.py runserver_plus --cert-file cert.pem --key-file key.pem $3:$4
+    else
+        python backend/manage.py runserver $3:$4
+    fi
 else
-    python manage.py runserver ${ABSOLUTE_URL}:${APP_PORT}
+    if [ ${USE_SSL:-False} = 'True' ]
+    then
+        python manage.py runserver_plus --cert-file cert.pem --key-file key.pem ${ABSOLUTE_URL:-0.0.0.0}:${APP_PORT:-8000}
+    else
+        python manage.py runserver ${ABSOLUTE_URL:-0.0.0.0}:${APP_PORT:-8000}
+    fi
 fi
 
-#gunicorn config.wsgi -w 4 --worker-class gevent -b ${ABSOLUTE_URL} --chdir=/app
+#gunicorn config.wsgi -w 4 --worker-class gevent -b ${ABSOLUTE_URL:-0.0.0.0} --chdir=/app
