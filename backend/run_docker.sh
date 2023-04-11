@@ -7,6 +7,6 @@ set -o xtrace # trace what gets executed (useful for debugging)
 
 export $(grep -v '^#' .env | xargs)
 
-docker build . -t django-steam-vue-backend
+docker build backend -t django-steam-vue-backend
 
-docker run --name django-steam-vue-backend --env-file ../.env -p ${APP_PORT}:8000 -d django-steam-vue-backend
+docker run --name django-steam-vue-backend --env-file .env -p ${APP_PORT}:8000 -d django-steam-vue-backend
