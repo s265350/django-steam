@@ -7,7 +7,7 @@ set -o xtrace # trace what gets executed (useful for debugging)
 
 export $(grep -v '^#' ../../.env | xargs)
 
-if [ $1 = 'True' ]
+if [ ${1:-False} = 'True' ]
 then
     if [ ${USE_SSL:-False} = 'True' ]
     then

@@ -69,7 +69,7 @@ To stop the server use *CRTL-C*, to stop the environment just type *deactivate*.
 
 To restart the server run:
 
-`. venv/bin/activate && bash ./backend/scripts/run.sh`
+`. venv/bin/activate && bash ./backend/scripts/run.sh True`
 
 ## Enjoy
 
