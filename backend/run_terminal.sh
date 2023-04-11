@@ -10,7 +10,7 @@ export $(grep -v '^#' .env | xargs)
 if [ ${USE_POSTGRES:-False} = 'True' ]
 then
     docker run --name ${POSTGRES_NAME:-postgres} -p ${POSTGRES_PORT:-4321}:5432 -e POSTGRES_USER=${POSTGRES_USER:-user} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-pass} -d postgres
-    until docker exec postgres pg_isready ; do sleep 3 ; done
+    until docker exec postgres pg_isready ; do sleep 5 ; done
 fi
 
 
