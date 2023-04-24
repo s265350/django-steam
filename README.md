@@ -24,6 +24,7 @@ Also you may want to set up some features:
 - POSTGRES_USER: the database user (USE_POSTGRES must be True)
 - POSTGRES_PASSWORD: the database password (USE_POSTGRES must be True)
 - POSTGRES_PORT: the database port (USE_POSTGRES must be True)
+- POSTGRES_HOST: must be the database service name (USE_POSTGRES must be True)
 
 ## SSL certificate (for HTTPS)
 
