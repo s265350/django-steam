@@ -44,3 +44,4 @@ media/
 # Venv
 env
 *.env
+*.pem

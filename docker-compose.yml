@@ -9,7 +9,7 @@ services:
     build:
       context: ./backend
     depends_on:
-      - db
+      - postgres
     env_file:
       - .env
     ports:
@@ -19,13 +19,13 @@ services:
       - ./backend:/app
     restart: on-failure
 
-  db:
+  postgres:
     image: postgres
     restart: always
     env_file:
       - .env
     ports:
-      - 4321:5432
+      - 4321:${POSTGRES_PORT}
     volumes: 
       - db_data:/var/lib/postgresql/data/
 

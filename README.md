@@ -29,7 +29,7 @@ Also you may want to set up some features:
 
 Feel free to use any tutorial on the internet to create your certificate, here is the one I followed:
 https://timonweb.com/django/https-django-development-server-ssl-certificate/
-Put both cert and key files inside the *django-steam-vue/backend* folder.
+Put both cert and key files inside the *django-steam/backend* folder.
 
 ## Build and run with Docker Compose
 
@@ -37,7 +37,7 @@ Docker Compose takes care of setting up anything you need.
 
 Download the *Docker CLI tool* or the *Docker application* (best) and *Docker Compose* from the website: **https://www.docker.com**.
 
-Open the terminal in the *django-steam-vue* folder and run:
+Open the terminal in the *django-steam* folder and run:
 
 `docker-compose up -d --build`
 
@@ -49,7 +49,7 @@ Note: to see how it is going you can eather remove the *-d* from the command or 
 
 Download the *Docker CLI tool* or the *Docker application* (best) from the website: **https://www.docker.com**.
 
-Open the terminal in the *django-steam-vue* folder and run this script to build and run the server:
+Open the terminal in the *django-steam* folder and run this script to build and run the server:
 
 `bash ./backend/run_docker.sh`
 
@@ -61,7 +61,7 @@ If you don't want to use Docker at all and run the server in the terminal follow
 
 Be sure to have python3 installed.
 
-Open the terminal in the *django-steam-vue* folder and run this script to build and run the server:
+Open the terminal in the *django-steam* folder and run this script to build and run the server:
 
 `bash ./backend/run_terminal.sh`
 
@@ -87,7 +87,7 @@ If you changed the options in the env file:
 
 If you are running the server in the terminal, you have to stop it (CTRL-C) then create the superuser and restart the server. The *run.sh* script will start the server.
 
-If you are using Docker with the application, open the server container *django-steam-vue-backend* and go to the *Terminal*.
+If you are using Docker with the application, open the server container *django-steam-backend* and go to the *Terminal*.
 
 Once you opened the terminal, run this command in the terminal:
 

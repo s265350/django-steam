@@ -23,6 +23,7 @@ ipython-genutils>=0.2.0
 jedi>=0.18.2
 mccabe>=0.7.0
 mypy>=1.1.1
+pyOpenSSL>=23.1.1
 pexpect>=4.8.0
 pickleshare>=0.7.5
 Pillow>=9.4.0
