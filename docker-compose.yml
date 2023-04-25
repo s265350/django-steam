@@ -14,7 +14,7 @@ services:
       - .env
     ports:
       - ${APP_PORT}:${APP_PORT}
-    command: bash ./scripts/start.sh
+    command: ${COMMAND}
     volumes:
       - ./backend:/app
     restart: on-failure

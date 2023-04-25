@@ -40,7 +40,13 @@ Download the *Docker CLI tool* or the *Docker application* (best) and *Docker Co
 
 Open the terminal in the *django-steam* folder and run:
 
-`docker-compose up -d --build`
+If you are on UNIX base OS:
+
+`bash ./compose.sh`
+
+If you are on Windows:
+
+`chmod + x /compose.sh && ./compose.sh`
 
 It may take some time.
 
@@ -52,7 +58,13 @@ Download the *Docker CLI tool* or the *Docker application* (best) from the websi
 
 Open the terminal in the *django-steam* folder and run this script to build and run the server:
 
+If you are on UNIX base OS:
+
 `bash ./backend/run_docker.sh`
+
+If you are on Windows:
+
+`chmod + x /backend/run_docker.sh && ./backend/run_docker.sh`
 
 Note (temporarly): you can **NOT** run postgres in Docker since it prevents containers to communicate (do **NOT** set the **USE_POSTGRES** flag in the *.env* file). If you want to use posgres you have to run the server in the terminal.
 
@@ -64,7 +76,13 @@ Be sure to have python3 installed.
 
 Open the terminal in the *django-steam* folder and run this script to build and run the server:
 
+If you are on UNIX base OS:
+
 `bash ./backend/run_terminal.sh`
+
+If you are on Windows:
+
+`chmod + x /backend/run_terminal.sh && ./backend/run_terminal.sh`
 
 To stop the server use *CRTL-C*, to stop the environment just type *deactivate*.
 

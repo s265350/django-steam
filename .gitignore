@@ -45,3 +45,5 @@ media/
 env
 *.env
 *.pem
+*.crt
+*.key

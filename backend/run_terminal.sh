@@ -13,7 +13,6 @@ then
     until docker exec postgres pg_isready ; do sleep 5 ; done
 fi
 
-
 pip install --upgrade pip
 
 pip install virtualenv
@@ -32,4 +31,10 @@ python backend/manage.py migrate
 
 # python backend/manage.py collectstatic --noinput --verbosity 0
 
-bash ./backend/scripts/run.sh True
+unamestr=$(uname)
+if [[ "$unamestr" == 'Windows' ]]; then
+    chmod + x /backend/run_docker.sh
+    ./backend/run_docker.sh
+else
+    bash ./backend/scripts/run.sh True
+fi

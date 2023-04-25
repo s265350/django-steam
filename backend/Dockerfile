@@ -32,4 +32,5 @@ RUN pip install -r ./requirements.txt
 # port where the Django app runs
 EXPOSE ${APP_PORT}
 
-CMD bash ./scripts/start.sh
+#CMD bash ./scripts/start.sh
+CMD ${COMMAND}

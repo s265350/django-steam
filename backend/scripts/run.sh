@@ -23,5 +23,3 @@ if [ ${USE_SSL:-False} = 'True' ]
             python manage.py runserver ${ABSOLUTE_URL:-0.0.0.0}:${APP_PORT:-8000}
         fi
     fi
-
-#gunicorn config.wsgi -w 4 --worker-class gevent -b ${ABSOLUTE_URL:-0.0.0.0} --chdir=/app
