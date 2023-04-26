@@ -1,6 +1,7 @@
 import xlwt
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from ..users.models import SteamUser, SteamUserProfile, CoachProfile
 
 User = get_user_model()
 
@@ -18,7 +19,7 @@ def export(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['Username', 'First Name', 'Last Name', 'Email Address', ]
+    columns = ['Steam ID', 'Username', 'First name', 'Last name', 'Email', 'Age', 'Profile URL']
 
     for col_num in range(len(columns)):
         sheet.write(row_num, col_num, columns[col_num], font_style) # at 0 row 0 column 
@@ -26,7 +27,14 @@ def export(request):
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
-    rows = User.objects.all().values_list('username', 'first_name', 'last_name', 'email')
+    rows = []
+    users = SteamUser.objects.all().values_list('username', 'first_name', 'last_name', 'email', 'age')
+
+    for user in users:
+        (username, *basic_info) = user
+        profile = SteamUserProfile.objects.all().values_list('personaname', 'profileurl')[0]
+        rows.append((username, profile[0], *basic_info, profile[1]))
+        
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):

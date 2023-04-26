@@ -88,7 +88,7 @@ class SteamUserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE) # CASCADE will delete everything related to the user if deleted
     
     # Steam API informations
-    personaname = models.CharField(_('Name'), max_length=50, null=True, blank=True)
+    personaname = models.CharField(_('Username'), max_length=50, null=True, blank=True)
     profileurl = models.CharField(_('URL'), max_length=255, null=True, blank=True)
     
     avatar = models.CharField(_('Avatar'), max_length=255, null=True, blank=True)
@@ -97,7 +97,6 @@ class SteamUserProfile(models.Model):
     
     communityvisibilitystate = models.IntegerField(_('Visibility'), choices=[(i, i) for i in range(1, 6)], default=1) # 1 - Private, 2 - Friends only, 3 - Friends of Friends, 4 - Users Only, 5 - Public
     personastate = models.IntegerField(_('Persona State'), choices=[(i, i) for i in range(7)], default=1) # 0 - Offline, 1 - Online, 2 - Busy, 3 - Away, 4 - Snooze, 5 - Looking to trade, 6 - Looking to play
-    # others
 
     # functions
     def __str__(self): # record shown in SteamUserProfiles table in the /admin route
