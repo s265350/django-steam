@@ -27,11 +27,9 @@ virtualenv venv
 pip install -r ./backend/requirements.txt
 
 python backend/manage.py makemigrations users
-
 python backend/manage.py makemigrations
-
+python backend/manage.py migrate users
 python backend/manage.py migrate
-
 # python backend/manage.py collectstatic --noinput --verbosity 0
 
 unamestr=$(uname)
