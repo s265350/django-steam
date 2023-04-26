@@ -19,6 +19,7 @@ from django.contrib.auth.views import LogoutView
 
 from apps.home import views as home
 from apps.users import views as users
+from apps.excel import views as excel
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
 # web patterns
 urlpatterns += [
     path('', home.home, name='home'),
+    path('excel/', excel.export, name='export'),
 ]
 
 # user login patterns
