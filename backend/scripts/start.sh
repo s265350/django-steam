@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# CLI commands:
+# - On UNIX: bash ./start.sh
+# - On WINDOWS: chmod + x /start.sh && ./start.sh
 
 set -o errexit # exit when a command fails (add "|| true" to commands that you allow to fail)
 set -o pipefail # prevents errors in a pipeline from being masked
