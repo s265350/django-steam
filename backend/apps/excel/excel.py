@@ -5,7 +5,10 @@ def export_userdata(response):
     book = xlwt.Workbook(encoding='utf-8') #  creates a Workbook of encoding utf-8
     sheet = book.add_sheet('Users Data') # creates a Sheet named “Users Data” and all the data will be written inside this sheet
 
-    # defining styles
+    # defining the columns
+    columns = ['SteamID', 'Username', 'Name', 'Surname', 'Email', 'Age', 'URL']
+    
+    # defining the styles
     styles = dict(
         header = xlwt.easyxf('\
             font: height 320, bold on, color red;\
@@ -58,8 +61,6 @@ def export_userdata(response):
             align: wrap on, vert center, horiz left;\
             '),
     )
-
-    columns = ['SteamID', 'Username', 'Name', 'Surname', 'Email', 'Age', 'URL']
 
     # body data collection
     rows = []
